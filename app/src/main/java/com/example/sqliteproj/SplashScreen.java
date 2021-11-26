@@ -4,6 +4,7 @@ import static com.example.sqliteproj.Utils.addStudent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SplashScreen extends AppCompatActivity {
     SQLiteDatabase db;
@@ -63,10 +65,21 @@ public class SplashScreen extends AppCompatActivity {
         btn_mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo fix crashing when applying with blank edit text
-                Intent intent = new Intent(SplashScreen.this, SearchGradeActivity.class);
-                intent.putExtra(Utils.KEY_STUDENT_AVGRADE, Integer.parseInt(et_mark.getText().toString()));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(SplashScreen.this, SearchGradeActivity.class);
+                    intent.putExtra(Utils.KEY_STUDENT_AVGRADE, Integer.parseInt(et_mark.getText().toString()));
+                    startActivity(intent);
+                }
+                catch(Exception e) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Write a grade";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                }
+
             }
         });
         btn_allstudents.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +102,12 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SplashScreen.this, Details.class));
+            }
+        });
+        btn_addstudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SplashScreen.this, AddStudentActivity.class));
             }
         });
     }

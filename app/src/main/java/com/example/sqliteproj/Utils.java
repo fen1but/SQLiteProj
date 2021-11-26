@@ -57,7 +57,6 @@ public class Utils {
                 TEACHER_SUBJECT_COL + " text)");
     }
 
-    //todo add addstudent method to button
     public static void addStudent(SQLiteDatabase db, String name, String surname, String class_var, int average_grade){
         db.execSQL("insert into tbl_student values(null,'"+name+"','"+surname+"','"+class_var+"',"+average_grade+")");
     }
@@ -118,22 +117,20 @@ public class Utils {
         return students_list;
     }
 
-    //todo rewrite (add id function)
     public static void deleteStudent(int studentId, SQLiteDatabase db){
-        db.execSQL("delete from tbl_student where student_id =" +studentId);
-        //db.delete("tbl_student", "student_id =" + studentId, null);
+        db.execSQL("delete from " + Utils.STUDENT_TABLE_NAME + "where student_id =" +studentId);
     }
 
     public static void updateStudent(Student student, SQLiteDatabase db){
+        int id = student.getId();
         String name = student.getName();
         String surname = student.getSurname();
         String className = student.getClass_var();
         int avg = student.getAverage_grade();
 
-        db.execSQL("update tbl_student set student_name ='" +name+ "' where student_id=" + id);
-        db.execSQL("update tbl_student set student_surname ='" +surname+ "' where student_id=" + id);
-        db.execSQL("update tbl_student set student_class_name ='" +className+ "' where student_id=" + id);
-        db.execSQL("update tbl_student set student_average =" +avg+ " where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_name ='" +name+ "' where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_surname ='" +surname+ "' where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_class_name ='" +className+ "' where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_average =" +avg+ " where student_id=" + id);
     }
-}
 }
