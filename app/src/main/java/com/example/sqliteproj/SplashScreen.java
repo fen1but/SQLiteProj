@@ -9,30 +9,47 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SplashScreen extends AppCompatActivity {
     SQLiteDatabase db;
-    Button btn_search, btn_mark;
+    Button btn_search, btn_mark, btn_allstudents, btn_addstudent, btn_details, btn_class;
     TextView tv_app;
-    EditText et_admin, et_mark;
+    EditText et_admin, et_mark, et_class;
+    ImageView img;
+    Animation anim_fadein;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        img = findViewById(R.id.img);
+        anim_fadein = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+        img.startAnimation(anim_fadein);
+
         db = openOrCreateDatabase(Utils.DB_NAME, MODE_PRIVATE, null);
         Utils.createTables(db);
-        Utils.addStudent(db, "Roman", "Kungurov", "Yud Bet 8", 100);
-        Utils.addStudent(db, "Korson", "Georgia", "Yud Bet 8", 10);
-        Utils.addStudent(db, "Murad", "The King", "Yud Bet 8", 101);
+        Utils.addStudent(db, "Roman", "Kungurov", "YudBet", 100);
+        Utils.addStudent(db, "Korson", "Georgia", "YudBet", 10);
+        Utils.addStudent(db, "Murad", "The King", "YudBet", 101);
+        Utils.addStudent(db, "Rafi", "Looser", "Alef", 0);
+        Utils.addStudent(db, "Amram", "Boss", "Yud", 100);
 
 
         et_admin = findViewById(R.id.et_admin);
+        et_class = findViewById(R.id.et_class);
         et_mark = findViewById(R.id.et_mark);
         btn_mark = findViewById(R.id.btn_mark);
+        btn_class = findViewById(R.id.btn_class);
+        btn_allstudents = findViewById(R.id.btn_allstudents);
+        btn_addstudent = findViewById(R.id.btn_addstudent);
+        btn_details = findViewById(R.id.btn_details);
         tv_app = findViewById(R.id.tv_app);
         btn_search = findViewById(R.id.btn_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -43,13 +60,35 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //todo fix searching by grade
         btn_mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //todo fix crashing when applying with blank edit text
                 Intent intent = new Intent(SplashScreen.this, SearchGradeActivity.class);
-                intent.putExtra(Utils.KEY_STUDENT_AVGRADE, et_mark.getText());
+                intent.putExtra(Utils.KEY_STUDENT_AVGRADE, Integer.parseInt(et_mark.getText().toString()));
                 startActivity(intent);
+            }
+        });
+        btn_allstudents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SplashScreen.this, SearchGradeActivity.class);
+                intent.putExtra(Utils.KEY_STUDENT_AVGRADE, -1);
+                startActivity(intent);
+            }
+        });
+        btn_class.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SplashScreen.this, SearchClassActivity.class);
+                intent.putExtra(Utils.KEY_STUDENT_CLASS, et_class.getText().toString());
+                startActivity(intent);
+            }
+        });
+        btn_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SplashScreen.this, Details.class));
             }
         });
     }

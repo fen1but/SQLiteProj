@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SQLiteProj">
         <activity
+            android:name=".Details"
+            android:exported="true" />
+        <activity
+            android:name=".SearchClassActivity"
+            android:exported="true" />
+        <activity
             android:name=".SearchGradeActivity"
             android:exported="true" />
         <activity
