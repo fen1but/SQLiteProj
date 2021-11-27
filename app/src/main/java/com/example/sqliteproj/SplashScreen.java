@@ -38,11 +38,16 @@ public class SplashScreen extends AppCompatActivity {
         db = openOrCreateDatabase(Utils.DB_NAME, MODE_PRIVATE, null);
         Utils.createTables(db);
         Utils.addStudent(db, "Roman", "Kungurov", "YudBet", 100);
-        Utils.addStudent(db, "Korson", "Georgia", "YudBet", 10);
-        Utils.addStudent(db, "Murad", "The King", "YudBet", 101);
-        Utils.addStudent(db, "Rafi", "Looser", "Alef", 0);
         Utils.addStudent(db, "Amram", "Boss", "Yud", 100);
-
+        Utils.addStudent(db, "Korson", "Georgia", "YudBet", 10);
+        Utils.addStudent(db, "Rafi", "Looser", "Alef", 0);
+        Utils.addStudent(db, "Murad", "The King", "YudBet", 101);
+        Utils.addClass(db, "YudBet", "Sara");
+        Utils.addClass(db, "Alef", "Bibi");
+        Utils.addClass(db, "Yud", "Ronny");
+        Utils.addTeacher(db, "Sara", "Akiva", "English");
+        Utils.addTeacher(db, "Bibi", "Ragimli", "Physics");
+        Utils.addTeacher(db, "Ronny", "HaMelech", "CS");
 
         et_admin = findViewById(R.id.et_admin);
         et_class = findViewById(R.id.et_class);

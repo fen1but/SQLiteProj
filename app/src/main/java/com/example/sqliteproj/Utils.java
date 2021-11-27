@@ -51,7 +51,7 @@ public class Utils {
 
         db.execSQL("create table if not exists "
                 + TEACHER_TABLE_NAME +
-                "(" + TEACHER_ID_COL + " text, " +
+                "(" + TEACHER_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 TEACHER_NAME_COL + " text, " +
                 TEACHER_SURNAME_COL + " text, " +
                 TEACHER_SUBJECT_COL + " text)");
@@ -59,6 +59,14 @@ public class Utils {
 
     public static void addStudent(SQLiteDatabase db, String name, String surname, String class_var, int average_grade){
         db.execSQL("insert into tbl_student values(null,'"+name+"','"+surname+"','"+class_var+"',"+average_grade+")");
+    }
+
+    public static void addClass(SQLiteDatabase db, String name, String class_teacher){
+        db.execSQL("insert into tbl_class values(null,'"+name+"','"+class_teacher+"')");
+    }
+
+    public static void addTeacher(SQLiteDatabase db, String name, String surname, String subject){
+        db.execSQL("insert into tbl_teacher values(null,'"+name+"','"+surname+"','"+subject+"')");
     }
 
     public static ArrayList<Student> SearchStudent(SQLiteDatabase db, String search_name) {
@@ -117,20 +125,23 @@ public class Utils {
         return students_list;
     }
 
-    public static void deleteStudent(int studentId, SQLiteDatabase db){
-        db.execSQL("delete from " + Utils.STUDENT_TABLE_NAME + "where student_id =" +studentId);
+    public static void deleteStudent(int id, SQLiteDatabase db){
+        db.execSQL("delete from " + Utils.STUDENT_TABLE_NAME + "where id =" +id);
     }
 
     public static void updateStudent(Student student, SQLiteDatabase db){
         int id = student.getId();
         String name = student.getName();
         String surname = student.getSurname();
-        String className = student.getClass_var();
-        int avg = student.getAverage_grade();
+        String class_var = student.getClass_var();
+        int average_grade = student.getAverage_grade();
 
         db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_name ='" +name+ "' where student_id=" + id);
         db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_surname ='" +surname+ "' where student_id=" + id);
-        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_class_name ='" +className+ "' where student_id=" + id);
-        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_average =" +avg+ " where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_class_name ='" +class_var+ "' where student_id=" + id);
+        db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_average =" +average_grade+ " where student_id=" + id);
     }
-}
+    }
+
+
+

@@ -1,23 +1,30 @@
 package com.example.sqliteproj;
 
 public class Teacher {
-    private String id;
+    private int id;
     private String name;
     private String surname;
     private String subject;
 
-    public Teacher(String id, String name, String surname, String subject){
+    public Teacher(int id, String name, String surname, String subject){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.subject = subject;
     }
 
-    public String getId() {
+    public Teacher(String name, String surname, String subject){
+        this.id = 0;
+        this.name = name;
+        this.surname = surname;
+        this.subject = subject;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
