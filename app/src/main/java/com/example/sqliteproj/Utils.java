@@ -1,8 +1,10 @@
 package com.example.sqliteproj;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ public class Utils {
     final static String TEACHER_SUBJECT_COL = "subject";
 
     final static String KEY_STUDENT_NAME = "name";
+    final static String KEY_STUDENT_SURNAME = "surname";
     final static String KEY_STUDENT_AVGRADE = "average_grade";
     final static String KEY_STUDENT_CLASS = "class";
 
@@ -141,7 +144,30 @@ public class Utils {
         db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_class_name ='" +class_var+ "' where student_id=" + id);
         db.execSQL("update "+Utils.STUDENT_TABLE_NAME +"set student_average =" +average_grade+ " where student_id=" + id);
     }
+    public static String getSubject(int id, SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("select class from tbl_student where id =" + id, null);
+        cursor.moveToNext();
+        String classs = cursor.getString(0);
+        cursor = db.rawQuery("select class_teacher from tbl_class where name ='" + classs + "'", null);
+        cursor.moveToNext();
+        String teacher = cursor.getString(0);
+        cursor = db.rawQuery("select subject from tbl_teacher where name ='" + teacher + "'", null);
+        cursor.moveToNext();
+        String subject = cursor.getString(0);
+        return subject;
     }
+    public static void addSubjects(SQLiteDatabase db){
+        db.execSQL("ALTER TABLE tbl_student" +
+                "  ADD COLUMN subject 'null'");
+        Cursor cursor = db.rawQuery("select * from tbl_student", null);
+        int i = 0;
+        while(cursor.moveToNext()){
+                db.execSQL("UPDATE tbl_student SET subject = " + "'" + getSubject(cursor.getInt(i), db) + "'");
+                i++;
+            }
+        }
+    }
+
 
 
 

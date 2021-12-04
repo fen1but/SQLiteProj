@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class SplashScreen extends AppCompatActivity {
     SQLiteDatabase db;
-    Button btn_search, btn_mark, btn_allstudents, btn_addstudent, btn_details, btn_class;
+    Button btn_search, btn_mark, btn_allstudents, btn_class;
     TextView tv_app;
     EditText et_admin, et_mark, et_class;
     ImageView img;
@@ -55,8 +55,6 @@ public class SplashScreen extends AppCompatActivity {
         btn_mark = findViewById(R.id.btn_mark);
         btn_class = findViewById(R.id.btn_class);
         btn_allstudents = findViewById(R.id.btn_allstudents);
-        btn_addstudent = findViewById(R.id.btn_addstudent);
-        btn_details = findViewById(R.id.btn_details);
         tv_app = findViewById(R.id.tv_app);
         btn_search = findViewById(R.id.btn_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -101,18 +99,6 @@ public class SplashScreen extends AppCompatActivity {
                 Intent intent = new Intent(SplashScreen.this, SearchClassActivity.class);
                 intent.putExtra(Utils.KEY_STUDENT_CLASS, et_class.getText().toString());
                 startActivity(intent);
-            }
-        });
-        btn_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SplashScreen.this, Details.class));
-            }
-        });
-        btn_addstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SplashScreen.this, AddStudentActivity.class));
             }
         });
     }
