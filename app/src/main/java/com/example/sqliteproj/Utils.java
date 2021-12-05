@@ -2,6 +2,7 @@ package com.example.sqliteproj;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
@@ -91,6 +92,16 @@ public class Utils {
         return students_list;
     }
 
+    public static ArrayList<Subject> SubjectList(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("select * from " + Utils.STUDENT_TABLE_NAME, null);
+        ArrayList<Subject> subject_list = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Subject sj = new Subject(cursor.getString(1), cursor.getString(2), cursor.getString(5), cursor.getInt(4));
+            subject_list.add(sj);
+        }
+        return subject_list;
+    }
+
     public static ArrayList<Student> SearchGrade(SQLiteDatabase db, int search_grade) {
         Cursor cursor = db.rawQuery("select * from " + Utils.STUDENT_TABLE_NAME, null);
         ArrayList<Student> students_list = new ArrayList<>();
@@ -157,14 +168,18 @@ public class Utils {
         return subject;
     }
     public static void addSubjects(SQLiteDatabase db){
-        db.execSQL("ALTER TABLE tbl_student" +
-                "  ADD COLUMN subject 'null'");
+        try{
+            db.execSQL("ALTER TABLE tbl_student" +
+                    "  ADD COLUMN subject 'null'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Cursor cursor = db.rawQuery("select * from tbl_student", null);
-        int i = 0;
+        int i = 1;
         while(cursor.moveToNext()){
-                db.execSQL("UPDATE tbl_student SET subject = " + "'" + getSubject(cursor.getInt(i), db) + "'");
-                i++;
-            }
+            db.execSQL("UPDATE tbl_student SET subject = " + "'" + getSubject(i, db) + "'" + " WHERE id =" + "'" + i + "'");
+            i++;
+        }
         }
     }
 

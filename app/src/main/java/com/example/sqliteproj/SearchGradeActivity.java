@@ -1,5 +1,7 @@
 package com.example.sqliteproj;
 
+import static com.example.sqliteproj.Utils.SubjectList;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,6 +26,7 @@ public class SearchGradeActivity extends AppCompatActivity {
     ListView lv_student;
     SQLiteDatabase db;
     ArrayList<Student> studentList;
+    ArrayList<Subject> subjectList;
     FloatingActionButton fab;
     Switch switch1;
     @Override
@@ -31,7 +34,6 @@ public class SearchGradeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_grade);
         switch1 = findViewById(R.id.switch1);
-        Boolean switchState = switch1.isChecked();
         db = openOrCreateDatabase(Utils.DB_NAME,
                 MODE_PRIVATE, null);
 
@@ -87,6 +89,9 @@ public class SearchGradeActivity extends AppCompatActivity {
                     String teacher = Utils.getSubject(1, db);
                     Log.d("check", teacher);
                     Utils.addSubjects(db);
+                    subjectList = Utils.SubjectList(db);
+                    SubjectAdapter adapter = new SubjectAdapter(subjectList, SearchGradeActivity.this);
+                    lv_student.setAdapter(adapter);
                 }
             }
         });
