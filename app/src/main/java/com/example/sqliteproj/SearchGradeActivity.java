@@ -89,7 +89,7 @@ public class SearchGradeActivity extends AppCompatActivity {
                     String teacher = Utils.getSubject(1, db);
                     Log.d("check", teacher);
                     Utils.addSubjects(db);
-                    subjectList = Utils.SubjectList(db);
+                    subjectList = Utils.sortSubjects(Utils.SubjectList(db));
                     SubjectAdapter adapter = new SubjectAdapter(subjectList, SearchGradeActivity.this);
                     lv_student.setAdapter(adapter);
                 }

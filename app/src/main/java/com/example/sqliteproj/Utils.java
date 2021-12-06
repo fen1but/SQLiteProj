@@ -181,6 +181,24 @@ public class Utils {
             i++;
         }
         }
+    public static ArrayList<Subject> sortSubjects(ArrayList<Subject> subject){
+        ArrayList<Subject> sorted = new ArrayList<>();
+
+        while(!subject.isEmpty()){
+            int j = 0;
+            Subject tmp = subject.remove(0);
+            sorted.add(tmp);
+            while(!subject.isEmpty() && subject.size() > 1 && j<subject.size()){
+                if(tmp.getSubject().equals(subject.get(j).getSubject())){
+                    sorted.add(subject.remove(j));
+                    j--;
+                }
+                j++;
+            }
+        }
+
+        return sorted;
+    }
     }
 
 
